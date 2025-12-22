@@ -1,0 +1,134 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Required permission for network access -->
+    <uses-permission
+        android:name="android.permission.INTERNET"/>
+    <!-- For image access -->
+    <uses-permission
+        android:name="android.permission.CAMERA"/>
+    <uses-permission
+        android:name="android.permission.READ_EXTERNAL_STORAGE"
+        android:maxSdkVersion="32"/>
+    <uses-permission
+        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        android:maxSdkVersion="29"/>
+    <uses-permission
+        android:name="android.permission.READ_MEDIA_IMAGES"/>
+    <!-- Android 13+ -->
+    <!--
+Source - https://stackoverflow.com/a/72052834
+Posted by Cương Nguyễn, modified by community. See post 'Timeline' for change history
+Retrieved 2025-11-24, License - CC BY-SA 4.0
+-->
+    <uses-permission
+        android:name="android.permission.QUERY_ALL_PACKAGES"/>
+    <!-- Optional: check network state -->
+    <uses-permission
+        android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission
+        android:name="android.permission.POST_NOTIFICATIONS"/>
+    <uses-permission
+        android:name="android.permission.SCHEDULE_EXACT_ALARM"/>
+    <uses-permission
+        android:name="android.permission.USE_EXACT_ALARM"/>
+    <uses-permission
+        android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+    <queries>
+        <!-- Allows app to check if phone dialer is available -->
+        <intent>
+            <action
+                android:name="android.intent.action.VIEW"/>
+            <data
+                android:scheme="tel"/>
+        </intent>
+        <!-- You can also keep your existing PROCESS_TEXT query if needed -->
+        <intent>
+            <action
+                android:name="android.intent.action.PROCESS_TEXT"/>
+            <data
+                android:mimeType="text/plain"/>
+        </intent>
+    </queries>
+    <application
+        android:label="Blue Leaf Guide"
+        android:name="${applicationName}"
+        android:icon="@mipmap/ic_launcher">
+        <!-- Flutter notifications receivers -->
+        <receiver
+            android:exported="false"
+            android:name="com.dexterous.flutterlocalnotifications.ScheduledNotificationReceiver"/>
+        <receiver
+            android:exported="false"
+            android:name="com.dexterous.flutterlocalnotifications.ScheduledNotificationBootReceiver">
+            <intent-filter>
+                <action
+                    android:name="android.intent.action.BOOT_COMPLETED"/>
+                <action
+                    android:name="android.intent.action.MY_PACKAGE_REPLACED"/>
+                <action
+                    android:name="android.intent.action.QUICKBOOT_POWERON"/>
+                <action
+                    android:name="com.htc.intent.action.QUICKBOOT_POWERON"/>
+            </intent-filter>
+        </receiver>
+        <!-- Main Activity -->
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"
+            android:launchMode="singleTop"
+            android:theme="@style/LaunchTheme"
+            android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
+            android:hardwareAccelerated="true"
+            android:windowSoftInputMode="adjustResize">
+            <intent-filter>
+                <action
+                    android:name="android.intent.action.VIEW"/>
+                <category
+                    android:name="android.intent.category.DEFAULT"/>
+                <category
+                    android:name="android.intent.category.BROWSABLE"/>
+                <data
+                    android:scheme="blueleafguide"
+                    android:host="auth"/>
+            </intent-filter>
+            <intent-filter
+                android:autoVerify="true">
+                <action
+                    android:name="android.intent.action.VIEW"/>
+                <category
+                    android:name="android.intent.category.DEFAULT"/>
+                <category
+                    android:name="android.intent.category.BROWSABLE"/>
+                <data
+                    android:scheme="https"
+                    android:host="blue-leaf-guide.firebaseapp.com"
+                    android:pathPrefix="/__/auth/action"/>
+            </intent-filter>
+            <!-- Standard launcher -->
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+            <!-- Flutter Normal Theme -->
+            <meta-data
+                android:name="io.flutter.embedding.android.NormalTheme"
+                android:resource="@style/NormalTheme"/>
+        </activity>
+        <!-- Flutter embedding meta-data -->
+        <meta-data
+            android:name="flutterEmbedding"
+            android:value="2"/>
+    </application>
+    <!-- Required to query activities that can process text, see:
+         https://developer.android.com/training/package-visibility and
+         https://developer.android.com/reference/android/content/Intent#ACTION_PROCESS_TEXT.
+
+         In particular, this is used by the Flutter engine in io.flutter.plugin.text.ProcessTextPlugin. -->
+    <queries>
+        <intent>
+            <action
+                android:name="android.intent.action.PROCESS_TEXT"/>
+            <data
+                android:mimeType="text/plain"/>
+        </intent>
+    </queries>
+</manifest>

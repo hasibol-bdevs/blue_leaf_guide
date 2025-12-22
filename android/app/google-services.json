@@ -1,0 +1,62 @@
+{
+  "project_info": {
+    "project_number": "1022593340174",
+    "project_id": "blue-leaf-guide",
+    "storage_bucket": "blue-leaf-guide.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1022593340174:android:2b3246b8d0ab18188b7d5f",
+        "android_client_info": {
+          "package_name": "com.example.blue_leaf_guide"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1022593340174-ej6775bc169eaua3dgcn002u8sl1togp.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.blue_leaf_guide",
+            "certificate_hash": "19354f2f357c9b36ac445a5a4582f416caf8ba88"
+          }
+        },
+        {
+          "client_id": "1022593340174-up3c4s7d644d5jtanme076gpekmi33jt.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.blue_leaf_guide",
+            "certificate_hash": "8a1e95ecd753d11bb341d6bf96c601d932364243"
+          }
+        },
+        {
+          "client_id": "1022593340174-b99mnq2r13vukratcoafrla2r0kbjhk7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC5DaxePJTZi2zEXyDMXXmw9LP--sX-Mhg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1022593340174-b99mnq2r13vukratcoafrla2r0kbjhk7.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1022593340174-nktal6ccj75jor1fvvubgk8m7h7c9hld.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.blueLeafGuide"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

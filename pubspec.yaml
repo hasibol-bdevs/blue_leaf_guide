@@ -1,0 +1,98 @@
+name: blue_leaf_guide
+description: "A new Flutter project."
+publish_to: "none"
+
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.8.0
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  cupertino_icons: ^1.0.8
+  provider: ^6.1.5+1
+  dio: ^5.9.0
+  pretty_dio_logger: ^1.4.0
+  shared_preferences: ^2.5.3
+  flutter_screenutil: ^5.9.3
+  go_router: ^17.0.0
+  shimmer: ^3.0.0
+  cached_network_image: ^3.4.1
+  intl: ^0.20.2
+  reorderables: ^0.6.0
+  timelines: ^0.1.0
+  fl_chart: ^1.1.0
+  flutter_svg: ^2.2.2
+  google_fonts: ^6.3.2
+  pinput: ^5.0.2
+  firebase_core: ^4.2.1
+  firebase_auth: ^6.1.2
+  cloud_firestore: ^6.1.0
+  email_otp: ^3.0.2
+  google_sign_in: ^6.2.1
+  flutter_native_splash: ^2.4.7
+  flutter_local_notifications: ^17.2.3
+  timezone: ^0.9.4
+  timelines_plus: ^1.0.8
+  timeline_tile: ^2.0.0
+  app_links: ^6.4.1
+  timelines_upgraded: ^0.1.1
+  smart_stepper: ^0.0.7
+  flutter_image_compress: ^2.4.0
+  image_picker: ^1.2.1
+  permission_handler: ^12.0.1
+  device_info_plus: ^12.2.0
+  url_launcher: ^6.3.2
+  flutter_colorpicker: ^1.1.0
+  record: ^6.1.2
+  just_audio: ^0.10.5
+  path_provider: ^2.1.5
+  flutter_launcher_icons: ^0.14.4
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^5.0.0
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - assets/images/
+    - assets/icons/svg/
+    - assets/illustrations/onboarding/
+
+# ----------------------------------------------------
+# 🔥 FLUTTER NATIVE SPLASH CONFIG
+# ----------------------------------------------------
+flutter_native_splash:
+  # White background
+  color: "#FFFFFF"
+
+  # Centered splash image
+  image: assets/images/splash.png # <-- replace with your splash image
+  android: true
+  ios: true
+  android_gravity: center
+  ios_content_mode: center
+  fullscreen: true
+
+  # Android 12+ specific splash configuration
+  android_12:
+    color: "#FFFFFF" # background color
+    image: assets/images/splash.png # center image
+    icon_background_color: "#FFFFFF" # circular icon background
+
+# ----------------------------------------------------
+# 🔥 FLUTTER LAUNCHER ICONS CONFIG
+# ----------------------------------------------------
+flutter_icons:
+  android: true
+  ios: true
+  remove_alpha_ios: true
+  image_path: "assets/images/app_icon.png" # <-- replace with your app icon
+  adaptive_icon_background: "#FFFFFF" # optional background for Android
+  adaptive_icon_foreground: "assets/images/app_icon.png" # optional foreground for Android
+

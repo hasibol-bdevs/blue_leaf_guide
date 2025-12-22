@@ -1,0 +1,12 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.example.blue_leaf_guide",
+      "sha256_cert_fingerprints": [
+        "CA:AE:28:99:D1:09:16:47:5F:C6:13:1C:D2:48:38:B2:19:69:EF:E5:A4:13:92:24:1B:85:B5:8F:EF:A6:1E:AC"
+      ]
+    }
+  }
+]

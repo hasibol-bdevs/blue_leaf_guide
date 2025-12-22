@@ -1,0 +1,49 @@
+{
+  "flutter": {
+    "platforms": {
+      "android": {
+        "default": {
+          "projectId": "blue-leaf-guide",
+          "appId": "1:1022593340174:android:2b3246b8d0ab18188b7d5f",
+          "fileOutput": "android/app/google-services.json"
+        }
+      },
+      "ios": {
+        "default": {
+          "projectId": "blue-leaf-guide",
+          "appId": "1:1022593340174:ios:a04b9d98bd3acb338b7d5f",
+          "uploadDebugSymbols": false,
+          "fileOutput": "ios/Runner/GoogleService-Info.plist"
+        }
+      },
+      "macos": {
+        "default": {
+          "projectId": "blue-leaf-guide",
+          "appId": "1:1022593340174:ios:a04b9d98bd3acb338b7d5f",
+          "uploadDebugSymbols": false,
+          "fileOutput": "macos/Runner/GoogleService-Info.plist"
+        }
+      },
+      "dart": {
+        "lib/firebase_options.dart": {
+          "projectId": "blue-leaf-guide",
+          "configurations": {
+            "android": "1:1022593340174:android:2b3246b8d0ab18188b7d5f",
+            "ios": "1:1022593340174:ios:a04b9d98bd3acb338b7d5f",
+            "macos": "1:1022593340174:ios:a04b9d98bd3acb338b7d5f",
+            "web": "1:1022593340174:web:45a1bcc1f9722a2a8b7d5f",
+            "windows": "1:1022593340174:web:e2853a8bca1549c08b7d5f"
+          }
+        }
+      }
+    }
+  },
+  "hosting": {
+    "public": "public",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ]
+  }
+}
