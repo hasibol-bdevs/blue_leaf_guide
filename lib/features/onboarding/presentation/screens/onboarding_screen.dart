@@ -7,9 +7,11 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
+import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
 import '../../../../core/services/local_storage.dart';
 import '../../../auth/providers/auth_provider.dart';
+import '../../../auth/providers/goal_provider.dart';
 import '../widgets/onboarding_widgets.dart';
 
 class OnboardingScreen extends StatefulWidget {
@@ -55,9 +57,10 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   ];
 
   @override
-  void initState() {
+  void initState(){
     super.initState();
     askNotificationPermission();
+    _checkAppleSignInAvailability();
   }
 
   Future<void> askNotificationPermission() async {
@@ -78,6 +81,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
         ?.requestPermissions(alert: true, badge: true, sound: true);
   }
 
+
   @override
   void dispose() {
     _pageController.dispose();
@@ -97,8 +101,20 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             backgroundColor: Colors.green,
           ),
         );
-
-        context.go('/home');
+        final uid = authProvider.currentUser!.uid;
+        try {
+          debugPrint("UI: starting goal initialization");
+          await context.read<GoalProvider>().initializeNewUserData(uid);
+          debugPrint("UI: goal initialization completed");
+          if (mounted) {
+            context.go('/home');
+          }
+        } catch (e) {
+          debugPrint("UI: goal initialization failed $e");
+          if (mounted) {
+            context.go('/home');
+          }
+        }
       } else if (mounted) {
         if (authProvider.errorMessage != null &&
             authProvider.errorMessage != 'Sign in cancelled') {
@@ -112,6 +128,61 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       print(stackTrace);
       if (mounted) {
         _showError('An unexpected error occurred during Google sign-in.');
+      }
+    }
+  }
+
+  ///TODO: _handleAppleSignIn
+  bool _isAppleSignInAvailable = false;
+  Future<void> _checkAppleSignInAvailability() async {
+    try {
+      final bool isAvailable = await SignInWithApple.isAvailable();
+      setState(() {
+        _isAppleSignInAvailable = isAvailable;
+      });
+    }catch(e){
+      setState(() {
+        _isAppleSignInAvailable = false;
+      });
+      debugPrint("UI: Apple sign-in not available $e");
+    }
+  }
+
+  Future<void> _handleAppleSignIn() async {
+    final authProvider = Provider.of<AuthProvider>(context, listen: false);
+
+    try {
+      final success = await authProvider.signInWithApple();
+
+      if (success && mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Signed in with Apple successfully!'),
+            backgroundColor: Colors.green,
+          ),
+        );
+        final uid = authProvider.currentUser!.uid;
+        try {
+          debugPrint("UI: starting goal initialization");
+          await context.read<GoalProvider>().initializeNewUserData(uid);
+          debugPrint("UI: goal initialization completed");
+          if (mounted) {
+            context.go('/home');
+          }
+        } catch (e) {
+          debugPrint("UI: goal initialization failed $e");
+          if (mounted) {
+            context.go('/home');
+          }
+        }
+      } else if (mounted) {
+        if (authProvider.errorMessage != null) {
+          _showError(authProvider.errorMessage!);
+        }
+      }
+    } catch (e) {
+      if (mounted) {
+        _showError('An unexpected error occurred during Apple sign-in. $e');
       }
     }
   }
@@ -172,7 +243,26 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   ),
                   SizedBox(height: 12.h),
 
-                  if (!Platform.isAndroid)
+                  if (!Platform.isAndroid && _isAppleSignInAvailable)
+                  // Consumer<AuthProvider>(
+                  //   builder: (context, authProvider, child) {
+                  //     return Column(
+                  //       children: [
+                  //         SocialButton(
+                  //           icon: 'assets/icons/svg/apple.svg',
+                  //           text: authProvider.isAppleLoading
+                  //               ? 'Signing in...'
+                  //               : 'Continue with Apple',
+                  //           backgroundColor: AppColors.brand500,
+                  //           textColor: Colors.white,
+                  //           onTap: authProvider.isAppleLoading ? null : _handleAppleSignIn,
+                  //           isLoading: authProvider.isAppleLoading,
+                  //         ),
+                  //         SizedBox(height: 12.h),
+                  //       ],
+                  //     );
+                  //   },
+                  // ),
                     Column(
                       children: [
                         SocialButton(

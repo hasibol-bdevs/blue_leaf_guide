@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart' hide AuthProvider;
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -11,6 +10,7 @@ import 'package:provider/provider.dart';
 
 import '../../../../app/theme/app_colors.dart';
 import '../../../auth/providers/auth_provider.dart';
+import '../../../auth/providers/goal_provider.dart';
 import '../../data/client_service.dart';
 import '../../providers/navigation_provider.dart';
 
@@ -254,8 +254,10 @@ class _HomeScreenState extends State<HomeScreen> {
                       value: '0',
                       gradientColors: [
                         Colors.white.withOpacity(0),
-                        const Color(0xFF24AC69).withOpacity(0.4),
-                        const Color(0xFF24AC69),
+                        // const Color(0xFF24AC69).withOpacity(0.4),
+                        // const Color(0xFF24AC69),
+                        const Color(0xFF2C63FD).withOpacity(0.4),
+                        const Color(0xFF2C63FD),
                       ],
                       onTap: () {
                         // If not authenticated, navigate to login or show message
@@ -277,13 +279,13 @@ class _HomeScreenState extends State<HomeScreen> {
 
                         return _buildStatsCard(
                           svgPath: 'assets/icons/svg/multi-user.svg',
-                          label: 'Total Client',
+                          label: 'Total Clients',
                           value:
                               '$totalClients', // dynamically show total clients
                           gradientColors: [
                             Colors.white.withOpacity(0),
-                            const Color(0xFF24AC69).withOpacity(0.4),
-                            const Color(0xFF24AC69),
+                            const Color(0xFF2C63FD).withOpacity(0.4),
+                            const Color(0xFF2C63FD),
                           ],
                           onTap: () {
                             context.push('/total-clients');
@@ -295,8 +297,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   // Total Earned: guard currentUser before subscribing
                   if (currentUser == null)
                     _buildStatsCard(
-                      svgPath: 'assets/icons/svg/dollar.svg',
-                      label: 'Total Earned',
+                      svgPath: 'assets/icons/svg/package.svg',
+                      label: 'Product Sold',
                       value: '--',
                       gradientColors: [
                         Colors.white.withOpacity(0),
@@ -315,8 +317,8 @@ class _HomeScreenState extends State<HomeScreen> {
                         if (snapshot.connectionState ==
                             ConnectionState.waiting) {
                           return _buildStatsCard(
-                            svgPath: 'assets/icons/svg/dollar.svg',
-                            label: 'Total Earned',
+                            svgPath: 'assets/icons/svg/package.svg',
+                            label: 'Product Sold',
                             value: '--',
                             gradientColors: [
                               Colors.white.withOpacity(0),
@@ -333,8 +335,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
                         if (snapshot.hasError) {
                           return _buildStatsCard(
-                            svgPath: 'assets/icons/svg/dollar.svg',
-                            label: 'Total Earned',
+                            svgPath: 'assets/icons/svg/package.svg',
+                            label: 'Product Sold',
                             value: 'Err',
                             gradientColors: [
                               Colors.white.withOpacity(0),
@@ -351,8 +353,8 @@ class _HomeScreenState extends State<HomeScreen> {
                         final intValue = numValue?.toInt() ?? 0;
                         final totalEarned = _formatNumber(intValue);
                         return _buildStatsCard(
-                          svgPath: 'assets/icons/svg/dollar.svg',
-                          label: 'Total Earned',
+                          svgPath: 'assets/icons/svg/package.svg',
+                          label: 'Product Sold',
                           value: '\$${totalEarned}',
                           gradientColors: [
                             Colors.white.withOpacity(0),
@@ -362,7 +364,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           onTap: () {
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(
-                                content: Text('Total Earned: $totalEarned'),
+                                content: Text('Product Sold: $totalEarned'),
                                 behavior: SnackBarBehavior.floating,
                               ),
                             );
@@ -392,8 +394,8 @@ class _HomeScreenState extends State<HomeScreen> {
                         value: displayValue,
                         gradientColors: [
                           Colors.white.withOpacity(0),
-                          const Color(0xFF6628EA).withOpacity(0.4),
-                          const Color(0xFF6628EA),
+                          const Color(0xFF2C63FD).withOpacity(0.4),
+                          const Color(0xFF2C63FD),
                         ],
                         onTap: () {
                           ScaffoldMessenger.of(context).showSnackBar(
@@ -430,8 +432,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 title: 'View Roadmap',
                 subtitle: 'The Blue Leaf Roadmap to Get Success',
                 svgPath: 'assets/icons/svg/card-two.svg',
-                color: AppColors.lightBlue40.withOpacity(0.25),
-                textColor: AppColors.timelinePrimary,
+                color: AppColors.lightPurple40.withOpacity(0.25),
+                textColor: AppColors.brand500,
                 onTap: () {
                   // Use provider to switch to Roadmap tab (index 2)
                   context.read<NavigationProvider>().setTab(2);
@@ -453,8 +455,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 title: 'View Daily Task',
                 subtitle: 'Track your daily activities and monthly goals',
                 svgPath: 'assets/icons/svg/card-three.svg',
-                color: AppColors.lightPink33.withOpacity(0.2),
-                textColor: AppColors.brightPurple,
+                color: AppColors.lightPurple40.withOpacity(0.25),
+                textColor: AppColors.brand500,
                 onTap: () {
                   context.read<NavigationProvider>().setTab(3);
                 },
@@ -507,6 +509,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       width: 24.w,
                       height: 24.h,
                       fit: BoxFit.contain,
+                      colorFilter: ColorFilter.mode(AppColors.brand500, BlendMode.srcIn),
                     ),
                   ),
                 ),
@@ -562,7 +565,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   style: TextStyle(
                     fontSize: 20.sp,
                     fontWeight: FontWeight.w600,
-                    color: textColor,
+                    color: textColor
                   ),
                 ),
                 SizedBox(height: 4.h),
@@ -587,6 +590,7 @@ class _HomeScreenState extends State<HomeScreen> {
               width: 80.w,
               height: 80.h,
               fit: BoxFit.contain,
+              color: textColor,
             ),
           ],
         ),

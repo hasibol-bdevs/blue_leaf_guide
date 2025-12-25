@@ -1,15 +1,18 @@
 import 'dart:io';
 
+import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
+import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
 import '../../../../app/theme/app_colors.dart';
 import '../../../../shared/widgets/button.dart';
 import '../../../../shared/widgets/text_field.dart' as CustomTextField;
 import '../../../onboarding/presentation/widgets/onboarding_widgets.dart';
 import '../../providers/auth_provider.dart';
+import '../../providers/goal_provider.dart';
 
 class SignInScreen extends StatefulWidget {
   const SignInScreen({super.key});
@@ -24,6 +27,12 @@ class _SignInScreenState extends State<SignInScreen> {
   bool _obscurePassword = true;
 
   final _formKey = GlobalKey<FormState>();
+
+  @override
+  void initState() {
+    _checkAppleSignInAvailability();
+    super.initState();
+  }
 
   @override
   void dispose() {
@@ -74,8 +83,24 @@ class _SignInScreenState extends State<SignInScreen> {
             backgroundColor: Colors.green,
           ),
         );
-
+        // final uid = authProvider.currentUser!.uid;
+        // try{
+        //   debugPrint("UI: starting goal initialization");
+        //   await context.read<GoalProvider>().initializeNewUserData(uid);
+        //   debugPrint("UI: goal initialization completed");
+        //   if(mounted){
+        //     context.go('/home');
+        //   }
+        // }catch(e){
+        //   debugPrint("UI: goal initialization failed $e");
+        //   if(mounted){
+        //     context.go('/home');
+        //   }
+        // }
         context.go('/home');
+        ///TODO: set goal data
+
+
       } else if (mounted) {
         if (authProvider.errorMessage != null &&
             authProvider.errorMessage != 'Sign in cancelled') {
@@ -85,10 +110,51 @@ class _SignInScreenState extends State<SignInScreen> {
         }
       }
     } catch (e, stackTrace) {
-      print('❌ Google sign-in error: $e');
+      debugPrint('❌ Google sign-in error: $e');
       print(stackTrace);
       if (mounted) {
         _showError('An unexpected error occurred during Google sign-in.');
+      }
+    }
+  }
+
+  ///TODO: _handleAppleSignIn
+  bool _isAppleSignInAvailable = false;
+  Future<void> _checkAppleSignInAvailability() async {
+    try {
+      final bool isAvailable = await SignInWithApple.isAvailable();
+      setState(() {
+        _isAppleSignInAvailable = isAvailable;
+      });
+    }catch(e){
+      setState(() {
+        _isAppleSignInAvailable = false;
+      });
+      debugPrint("UI: Apple sign-in not available $e");
+    }
+  }
+  Future<void> _handleAppleSignIn() async {
+    final authProvider = Provider.of<AuthProvider>(context, listen: false);
+
+    try {
+      final success = await authProvider.signInWithApple();
+
+      if (success && mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Signed in with Apple successfully!'),
+            backgroundColor: Colors.green,
+          ),
+        );
+        context.go('/home');
+      } else if (mounted) {
+        if (authProvider.errorMessage != null) {
+          _showError(authProvider.errorMessage!);
+        }
+      }
+    } catch (e) {
+      if (mounted) {
+        _showError('An unexpected error occurred during Apple sign-in. $e');
       }
     }
   }
@@ -262,7 +328,26 @@ class _SignInScreenState extends State<SignInScreen> {
                           },
                         ),
                         SizedBox(height: 12.h),
-                        if (!Platform.isAndroid)
+                        if (!Platform.isAndroid && _isAppleSignInAvailable)
+                          // Consumer<AuthProvider>(
+                          //   builder: (context, authProvider, child) {
+                          //     return Column(
+                          //       children: [
+                          //         SocialButton(
+                          //           icon: 'assets/icons/svg/apple.svg',
+                          //           text: authProvider.isAppleLoading
+                          //               ? 'Signing in...'
+                          //               : 'Continue with Apple',
+                          //           backgroundColor: AppColors.brand500,
+                          //           textColor: Colors.white,
+                          //           onTap: authProvider.isAppleLoading ? null : _handleAppleSignIn,
+                          //           isLoading: authProvider.isAppleLoading,
+                          //         ),
+                          //         SizedBox(height: 12.h),
+                          //       ],
+                          //     );
+                          //   },
+                          // ),
                           Column(
                             children: [
                               SocialButton(

@@ -8,6 +8,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
 import '../../../core/services/notification_service.dart';
 
@@ -321,6 +322,92 @@ class AuthService {
       return {
         'success': false,
         'message': 'An error occurred during Google sign-in. Please try again.',
+      };
+    }
+  }
+
+  ///TODO: signInWithApple
+  Future<Map<String, dynamic>> signInWithApple() async {
+    try {
+      // 1. Trigger Apple Sign-In flow
+      final appleCredential = await SignInWithApple.getAppleIDCredential(
+        scopes: [
+          AppleIDAuthorizationScopes.email,
+          AppleIDAuthorizationScopes.fullName,
+        ],
+      );
+
+      // 2. Create Firebase Credential
+      final OAuthProvider oAuthProvider = OAuthProvider('apple.com');
+      final credential = oAuthProvider.credential(
+        idToken: appleCredential.identityToken,
+        rawNonce: appleCredential.state, // Ensure you handle nonce if using manual flow
+      );
+
+      // 3. Sign in to Firebase
+      final userCredential = await _auth.signInWithCredential(credential);
+      final user = userCredential.user!;
+      final uid = user.uid;
+
+      // 4. Handle Name (Apple only sends this on the FIRST sign-in)
+      // If it's null, we'll try to keep what's in Firestore or use Firebase display name
+      String firstName = appleCredential.givenName ?? '';
+      String lastName = appleCredential.familyName ?? '';
+
+      // 5. Firestore logic for images & existing data
+      final userDoc = await _firestore.collection('users').doc(uid).get();
+
+      String? currentPhotoURL;
+      if (userDoc.exists) {
+        currentPhotoURL = userDoc.data()?['photoURL'];
+        // If Apple didn't provide a name (subsequent login), use existing ones
+        if (firstName.isEmpty) firstName = userDoc.data()?['firstName'] ?? '';
+        if (lastName.isEmpty) lastName = userDoc.data()?['lastName'] ?? '';
+      }
+
+      bool hasCustomImage =
+          currentPhotoURL != null &&
+              currentPhotoURL.isNotEmpty &&
+              !currentPhotoURL.startsWith('http');
+
+      final Map<String, dynamic> userData = {
+        'firstName': firstName,
+        'lastName': lastName,
+        'email': user.email ?? appleCredential.email ?? '',
+        'provider': 'apple',
+        'updatedAt': FieldValue.serverTimestamp(),
+      };
+
+      // Apple doesn't provide a photoURL, so we only set it if the user
+      // doesn't have a custom one and it's a new account.
+      if (!hasCustomImage && !userDoc.exists) {
+        userData['photoURL'] = '';
+      }
+
+      if (!userDoc.exists) {
+        userData['createdAt'] = FieldValue.serverTimestamp();
+      }
+
+      // 6. Save/update Firestore
+      await _firestore
+          .collection('users')
+          .doc(uid)
+          .set(userData, SetOptions(merge: true));
+
+      await _saveLoginState(uid);
+
+      return {
+        'success': true,
+        'message': 'Signed in with Apple successfully',
+        'user': user,
+      };
+    } on FirebaseAuthException catch (e) {
+      return {'success': false, 'message': _getAuthErrorMessage(e.code)};
+    } catch (e) {
+      print('Apple Sign-In Error: $e');
+      return {
+        'success': false,
+        'message': 'An error occurred during Apple sign-in.',
       };
     }
   }

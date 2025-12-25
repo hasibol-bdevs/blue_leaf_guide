@@ -82,6 +82,15 @@ class _RewardsScreenState extends State<RewardsScreen> {
       leftPosition = screenWidth - menuWidth - 16.w;
     }
 
+    final screenHeight = MediaQuery.of(context).size.height;
+    final estimatedMenuHeight = 250.h; // This matches your maxHeight constraint
+    // 2. Check if there is enough space below. If not, show it ABOVE the button.
+    bool showAbove = (offset.dy + size.height + estimatedMenuHeight) > screenHeight - 16.h;
+    double topPosition = showAbove
+    ? offset.dy - estimatedMenuHeight - 4.h // Position above
+        : offset.dy + size.height + 4.h;        // Position below (original logic)
+// 3. Prevent it from going off the top of the screen on very small devices
+    if (topPosition < 16.h) topPosition = 16.h;
     OverlayEntry? overlayEntry;
 
     overlayEntry = OverlayEntry(
@@ -95,7 +104,8 @@ class _RewardsScreenState extends State<RewardsScreen> {
             Positioned.fill(child: Container(color: Colors.transparent)),
             Positioned(
               left: leftPosition,
-              top: offset.dy + size.height + 4.h,
+              // top: offset.dy + size.height + 4.h,
+              top: topPosition,
               child: Material(
                 color: Colors.transparent,
                 child: Container(
@@ -680,6 +690,7 @@ class _RewardsScreenState extends State<RewardsScreen> {
     return '${(clamped * 100).toStringAsFixed(1)}%';
   }
 
+
   @override
   Widget build(BuildContext context) {
     final userId = _auth.currentUser!.uid;
@@ -704,7 +715,7 @@ class _RewardsScreenState extends State<RewardsScreen> {
                     child: _buildStatCard(
                       svgPath: 'assets/icons/svg/fire.svg',
                       title: 'Current Streak',
-                      value: '5 days',
+                      value: '0 days',
                       backgroundColor: AppColors.backgroundLight,
                     ),
                   ),

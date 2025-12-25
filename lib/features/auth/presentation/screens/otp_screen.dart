@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:blue_leaf_guide/features/auth/providers/goal_provider.dart';
 import 'package:flutter/material.dart' hide BackButtonIcon;
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
@@ -68,7 +69,10 @@ class _OTPScreenState extends State<OTPScreen> {
     final success = await authProvider.verifyOTP(pinController.text);
 
     if (success && mounted) {
+      final uid = authProvider.currentUser!.uid;
       context.push(widget.nextRoute ?? '/setup-account');
+      ///TODO: set goal data
+      await context.read<GoalProvider>().initializeNewUserData(uid);
     } else if (mounted) {
       _showError(authProvider.errorMessage ?? 'Invalid OTP');
     }

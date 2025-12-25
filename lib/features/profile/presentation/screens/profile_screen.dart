@@ -147,7 +147,7 @@ class ProfileScreen extends StatelessWidget {
               _buildProfileItem(
                 svgIconPath: 'assets/icons/svg/profile-law.svg',
                 iconBackgroundColor: AppColors.textPrimary.withOpacity(0.05),
-                title: 'Terms of Use',
+                title: 'Terms & Conditions',
                 onTap: () {
                   context.push('/terms');
                 },

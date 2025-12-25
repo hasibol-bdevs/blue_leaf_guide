@@ -8,17 +8,24 @@ plugins {
     id("com.google.gms.google-services")
 }
 
+val keystoreProperties = Properties()
+val keystorePropertiesFile = rootProject.file("key.properties")
+if (keystorePropertiesFile.exists()) {
+    keystoreProperties.load(FileInputStream(keystorePropertiesFile))
+}
+
 android {
-    namespace = "com.example.blue_leaf_guide"
-    compileSdk = flutter.compileSdkVersion
+    namespace = "com.cmg3.blue_leaf_guide"
+    compileSdk = 36
     ndkVersion = "27.0.12077973"
 
     defaultConfig {
-        applicationId = "com.example.blue_leaf_guide"
-        minSdk = 23
-        targetSdk = 34
+        applicationId = "com.cmg3.blue_leaf_guide"
+        minSdk = flutter.minSdkVersion
+        targetSdk = 36
         versionCode = flutter.versionCode
         versionName = flutter.versionName
+        multiDexEnabled = true
     }
 
     compileOptions {
@@ -40,7 +47,8 @@ android {
 
     signingConfigs {
         create("release") {
-            storeFile = file(keystoreProperties["storeFile"] ?: "release-keystore.jks")
+//            storeFile = file(keystoreProperties["storeFile"] ?: "release-keystore.jks")
+            storeFile = keystoreProperties["storeFile"]?.let { file(it) }
             storePassword = keystoreProperties["storePassword"] as String?
             keyAlias = keystoreProperties["keyAlias"] as String?
             keyPassword = keystoreProperties["keyPassword"] as String?
@@ -64,6 +72,7 @@ dependencies {
     // ✅ Required for flutter_local_notifications >=17
     coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.0.3")
     implementation("androidx.core:core-ktx:1.12.0")
+    implementation(platform("com.google.firebase:firebase-bom:34.7.0"))
 }
 
 flutter {

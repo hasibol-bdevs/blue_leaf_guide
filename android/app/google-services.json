@@ -7,6 +7,74 @@
   "client": [
     {
       "client_info": {
+        "mobilesdk_app_id": "1:1022593340174:android:67aaa4f501bb35948b7d5f",
+        "android_client_info": {
+          "package_name": "com.cmg3.blue_leaf_guide"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1022593340174-3qefe45stp17emeok0akc7qneotphgau.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.cmg3.blue_leaf_guide",
+            "certificate_hash": "0f0cc6ccd591a9316a2dcab1951ee7206d57adda"
+          }
+        },
+        {
+          "client_id": "1022593340174-ag9lucm7iq9qgl9a9mp1115rdscvhs2d.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.cmg3.blue_leaf_guide",
+            "certificate_hash": "19354f2f357c9b36ac445a5a4582f416caf8ba88"
+          }
+        },
+        {
+          "client_id": "1022593340174-brtk3o7h3ch0cnjo50qkecm160vb5q33.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.cmg3.blue_leaf_guide",
+            "certificate_hash": "8a1e95ecd753d11bb341d6bf96c601d932364243"
+          }
+        },
+        {
+          "client_id": "1022593340174-scdhiedm22kgmilcg2i0g273uq2j1bs7.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.cmg3.blue_leaf_guide",
+            "certificate_hash": "604c7ca984e452d271d156c748a331d1176f779b"
+          }
+        },
+        {
+          "client_id": "1022593340174-b99mnq2r13vukratcoafrla2r0kbjhk7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC5DaxePJTZi2zEXyDMXXmw9LP--sX-Mhg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1022593340174-b99mnq2r13vukratcoafrla2r0kbjhk7.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1022593340174-nktal6ccj75jor1fvvubgk8m7h7c9hld.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.blueLeafGuide"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
         "mobilesdk_app_id": "1:1022593340174:android:2b3246b8d0ab18188b7d5f",
         "android_client_info": {
           "package_name": "com.example.blue_leaf_guide"
@@ -14,11 +82,27 @@
       },
       "oauth_client": [
         {
+          "client_id": "1022593340174-4cblvn0k0nnb06iua9ainbdutfp2rbi5.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.blue_leaf_guide",
+            "certificate_hash": "0f0cc6ccd591a9316a2dcab1951ee7206d57adda"
+          }
+        },
+        {
           "client_id": "1022593340174-ej6775bc169eaua3dgcn002u8sl1togp.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.example.blue_leaf_guide",
             "certificate_hash": "19354f2f357c9b36ac445a5a4582f416caf8ba88"
+          }
+        },
+        {
+          "client_id": "1022593340174-gfjgnm5ugfseiuoqth3u6cf5dd13bucd.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.blue_leaf_guide",
+            "certificate_hash": "604c7ca984e452d271d156c748a331d1176f779b"
           }
         },
         {

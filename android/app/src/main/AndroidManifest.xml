@@ -13,14 +13,15 @@
         android:maxSdkVersion="29"/>
     <uses-permission
         android:name="android.permission.READ_MEDIA_IMAGES"/>
+    <uses-permission android:name="android.permission.READ_MEDIA_VIDEO" />
     <!-- Android 13+ -->
     <!--
 Source - https://stackoverflow.com/a/72052834
 Posted by Cương Nguyễn, modified by community. See post 'Timeline' for change history
 Retrieved 2025-11-24, License - CC BY-SA 4.0
 -->
-    <uses-permission
-        android:name="android.permission.QUERY_ALL_PACKAGES"/>
+<!--    <uses-permission-->
+<!--        android:name="android.permission.QUERY_ALL_PACKAGES"/>-->
     <!-- Optional: check network state -->
     <uses-permission
         android:name="android.permission.ACCESS_NETWORK_STATE"/>
@@ -41,6 +42,12 @@ Retrieved 2025-11-24, License - CC BY-SA 4.0
                 android:scheme="tel"/>
         </intent>
         <!-- You can also keep your existing PROCESS_TEXT query if needed -->
+        <intent>
+            <action
+                android:name="android.intent.action.PROCESS_TEXT"/>
+            <data
+                android:mimeType="text/plain"/>
+        </intent>
         <intent>
             <action
                 android:name="android.intent.action.PROCESS_TEXT"/>
@@ -123,12 +130,12 @@ Retrieved 2025-11-24, License - CC BY-SA 4.0
          https://developer.android.com/reference/android/content/Intent#ACTION_PROCESS_TEXT.
 
          In particular, this is used by the Flutter engine in io.flutter.plugin.text.ProcessTextPlugin. -->
-    <queries>
-        <intent>
-            <action
-                android:name="android.intent.action.PROCESS_TEXT"/>
-            <data
-                android:mimeType="text/plain"/>
-        </intent>
-    </queries>
+<!--    <queries>-->
+<!--        <intent>-->
+<!--            <action-->
+<!--                android:name="android.intent.action.PROCESS_TEXT"/>-->
+<!--            <data-->
+<!--                android:mimeType="text/plain"/>-->
+<!--        </intent>-->
+<!--    </queries>-->
 </manifest>

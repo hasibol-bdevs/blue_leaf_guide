@@ -12,6 +12,7 @@ import 'app/utils/firebase_helper.dart';
 import 'core/services/local_storage.dart';
 import 'core/services/notification_service.dart';
 import 'features/auth/providers/auth_provider.dart';
+import 'features/auth/providers/goal_provider.dart';
 import 'features/home/providers/navigation_provider.dart';
 import 'features/task/providers/subtitle_provider.dart';
 
@@ -149,6 +150,7 @@ class _MyAppState extends State<MyApp> {
         ChangeNotifierProvider(create: (_) => AuthProvider()),
         ChangeNotifierProvider(create: (_) => NavigationProvider()),
         ChangeNotifierProvider(create: (_) => SubtitleProvider()),
+        ChangeNotifierProvider(create: (_) => GoalProvider()),
       ],
       child: ScreenUtilInit(
         designSize: const Size(375, 812),

@@ -9,6 +9,7 @@ import '../data/auth_service.dart';
 class AuthProvider with ChangeNotifier {
   final AuthService _authService = AuthService();
 
+  bool _isAppleLoading = false;
   bool _isLoading = false;
   bool _isGoogleLoading = false; // NEW: Separate loading state for Google
   String? _errorMessage;
@@ -18,12 +19,15 @@ class AuthProvider with ChangeNotifier {
   // Temp storage for signup flow
   String? _pendingEmail;
 
+  bool get isAppleLoading => _isAppleLoading;
   bool get isLoading => _isLoading;
   bool get isGoogleLoading => _isGoogleLoading; // NEW: Getter
   String? get errorMessage => _errorMessage;
   User? get currentUser => _currentUser;
   Map<String, dynamic>? get userData => _userData;
   String? get pendingEmail => _pendingEmail;
+
+
 
   AuthProvider() {
     _currentUser = _authService.currentUser;
@@ -202,6 +206,37 @@ class AuthProvider with ChangeNotifier {
     } catch (e) {
       _isGoogleLoading = false; // Changed from _isLoading
       _errorMessage = 'An error occurred. Please try again.';
+      notifyListeners();
+      return false;
+    }
+  }
+
+  ///TODO: signInWithApple
+  Future<bool> signInWithApple() async {
+    _isAppleLoading = true;
+    _errorMessage = null;
+    notifyListeners();
+
+    try {
+      final result = await _authService.signInWithApple();
+
+      _isAppleLoading = false;
+
+      if (result['success']) {
+        _currentUser = result['user'];
+        debugPrint('🟨 Current User $_currentUser');
+        await _loadUserData();
+        notifyListeners();
+        return true;
+      } else {
+        _errorMessage = result['message'];
+        notifyListeners();
+        return false;
+      }
+    } catch (e) {
+      _isAppleLoading = false;
+      _errorMessage = 'An error occurred. Please try again.';
+      debugPrint('❌ Error: $e');
       notifyListeners();
       return false;
     }

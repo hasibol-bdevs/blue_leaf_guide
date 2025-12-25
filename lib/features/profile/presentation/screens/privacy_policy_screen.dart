@@ -38,38 +38,103 @@ class PrivacyPolicyScreen extends StatelessWidget {
             SizedBox(height: 16.h),
 
             _buildSection(
-              '1. Privacy & Safety',
-              'Your personal details stay secure through strong protection and responsible handling.',
+              '',
+              '''Last Updated: 12/10/2025 
+                This Privacy Policy (“Policy”) describes how Blue Leaf Guide (“Company,” “we,” “our,” or “us”) collects, uses, discloses, retains, and protects your information when you access or use our cosmetology education mobile application and associated services (collectively, the “App”). By accessing or using the App, you acknowledge that you have read, understood, and agree to the terms of this Policy. 
+    Your privacy is important to us. We are committed to maintaining the confidentiality, integrity, and security of your personal information.''',
+            ),
+            _buildSection(
+              '1. Information We Collect',
+              '''1.1  Personal Information Provided by You 
+                We may collect personal information that you voluntarily provide when registering or interacting with the App, including but not limited to:
+
+            Full name
+            Email address
+            Login credentials (encrypted)
+        Subscription and plan selection
+    Communications you send to our support team
+
+        1.2 Automatically Collected Information
+
+        When you access or use the App, we may automatically collect:
+
+        Device identifiers, IP address, operating system, browser type
+        App usage data, interaction logs, performance metrics
+        Session duration, learning activity, course progress 
+    1.3 Payment Information 
+    All subscription and billing information is processed securely through third-party platforms (e.g., Apple App Store, Google Play Store, Stripe).  We do not store your full credit card number or sensitive financial information on our servers.''',
             ),
             SizedBox(height: 12.h),
 
             _buildSection(
-              '2. Data We Use',
-              'We only collect the essentials to improve your experience and deliver smarter features.',
+              '2. How We Use Your Information',
+              '''We may use your information for the following purposes:
+
+To create, maintain, and secure your account
+To provide access to educational modules, progress tracking, and subscription-based content
+To manage billing, subscription status, and entitlement access
+To analyze and enhance App performance, features, and user experience
+To send administrative notices, updates, and customer support communications
+To comply with legal responsibilities and enforce our Terms & Conditions
+
+We do not sell or rent your personal information to third parties under any circumstances.''',
             ),
             SizedBox(height: 12.h),
 
             _buildSection(
-              '3. Your Control',
-              'You can review, update, or delete your account and data whenever it suits you best.',
+              '3. Data Retention and Deletion',
+              '''3.1 Retention Practices
+
+We retain your data only for as long as it is reasonably necessary to:
+
+Maintain your account
+Provide educational services
+Comply with legal, tax, or regulatory obligations
+Fulfill internal business purposes
+
+Educational progress, activity logs, and account information may be retained for record-keeping and service continuity even after subscription cancellation unless deletion is expressly requested.
+
+3.2 Account Deletion
+
+Upon receiving a verified deletion request:
+
+Your account and associated personal information will be permanently deleted within 30 days
+Some transactional or legally required records may be stored for compliance purposes''',
             ),
             SizedBox(height: 12.h),
 
             _buildSection(
-              '4. Secure Systems',
-              'Advanced safeguards keep your activity private and prevent unauthorized access.',
+              '4. Disclosure of Information to Third Parties',
+              '''We may share information with trusted partners who provide services necessary to operate the App, including:
+
+Payment processors
+Cloud hosting providers
+Email delivery services
+Analytics and crash-reporting tools
+
+Each provider is contractually obligated to protect your information and use it solely for the services they provide on our behalf.
+
+We do not disclose your information to marketers.''',
             ),
             SizedBox(height: 12.h),
 
             _buildSection(
-              '5. Transparency Always',
-              'You’ll be informed about any updates so you always know how your information is handled.',
+              '5. Security Measures',
+              '''We implement commercially reasonable administrative, technical, and physical safeguards designed to protect your information from unauthorized access, disclosure, alteration, or destruction.
+ Despite these measures, no system is entirely secure, and you acknowledge that you provide information at your own risk.''',
             ),
             SizedBox(height: 12.h),
 
             _buildSection(
-              '6. Contact',
-              'For any concerns or support, reach us at: support@blueleafguide.com',
+              '6. User Rights and Choices',
+              '''Depending on your jurisdiction, you may have the right to:
+
+Access your personal information
+Request corrections or updates
+Request deletion of your information
+Restrict or object to certain data processing activities
+Request copies of your data in portable format 
+All requests can be made by contacting: support@blgapp.com''',
             ),
           ],
         ),

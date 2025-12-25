@@ -35,7 +35,7 @@ import '../../features/profile/presentation/screens/notifications_screen.dart';
 import '../../features/profile/presentation/screens/privacy_policy_screen.dart';
 import '../../features/profile/presentation/screens/profile_information_screen.dart';
 import '../../features/profile/presentation/screens/profile_screen.dart';
-import '../../features/profile/presentation/screens/terms_of_service_screen.dart';
+import '../../features/profile/presentation/screens/terms_and_conditions_screen.dart';
 import '../../features/roadmap/presentation/screens/roadmap_details_screen.dart';
 
 final rootNavigatorKey = GlobalKey<NavigatorState>();
