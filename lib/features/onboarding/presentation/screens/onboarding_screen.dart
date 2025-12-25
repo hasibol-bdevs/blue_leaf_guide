@@ -81,7 +81,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
         ?.requestPermissions(alert: true, badge: true, sound: true);
   }
 
-
   @override
   void dispose() {
     _pageController.dispose();
